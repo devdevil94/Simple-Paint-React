@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ColorsList from "./components/ColorsList";
+import colors from "./ColorsData";
 
 import "./styles.css";
 
-const MyContext = React.createContext();
+// const MyContext = React.createContext();
 
-class MyProvider extends Component {
-  state = {};
-  render() {
-    return (
-      <MyContext.Provider value="special">
-        {this.props.children}
-      </MyContext.Provider>
-    );
-  }
-}
+// class MyProvider extends Component {
+//   state = {};
+//   render() {
+//     return (
+//       <MyContext.Provider value={{
+//         state: this.state
+//       }}>
+//         {this.props.children}
+//       </MyContext.Provider>
+//     );
+//   }
+// }
 
 class App extends Component {
   render() {
