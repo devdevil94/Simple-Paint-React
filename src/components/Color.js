@@ -4,24 +4,25 @@ class Color extends Component {
   render() {
     const outerBoxStyle = {
       border: "1px solid #000",
-      width: "50px",
-      height: "50px",
-      display: "table"
+      width: "40px",
+      height: "40px",
+      margin: "10px",
+      position: "relative"
     };
     const innerCircleStyle = {
-      maxWidth: "20px",
-      maxHeight: "20px",
-      display: "table-cell",
+      width: "33%",
+      height: "33%",
       textAlign: "center",
       verticalAlign: "middle",
       backgroundColor: "red",
-      borderRadius: "50% 50%"
+      borderRadius: "50% 50%",
+      position: "absolute",
+      top: "33%",
+      right: "33%"
     };
     return (
-      <div>
-        <div style={outerBoxStyle}>
-          <span style={innerCircleStyle} />
-        </div>
+      <div style={outerBoxStyle}>
+        <div style={innerCircleStyle} />
       </div>
     );
   }
