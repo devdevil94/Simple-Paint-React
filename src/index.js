@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import ColorsList from "./components/ColorsList";
-import colors from "./ColorsData";
+import ColorsGroup from "./components/ColorsGroup";
 
 import "./styles.css";
 
@@ -25,7 +24,7 @@ class App extends Component {
     return (
       // <MyProvider>
       <div>
-        <ColorsList />
+        <ColorsGroup />
       </div>
       // </MyProvider>
     );

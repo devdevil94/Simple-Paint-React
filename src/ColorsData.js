@@ -4,8 +4,8 @@ const colors = [
     hex: "#ff0000"
   },
   {
-    name: "white",
-    hex: "#ffffff"
+    name: "green",
+    hex: "#33cc33"
   },
   {
     name: "black",
@@ -13,11 +13,11 @@ const colors = [
   },
   {
     name: "yellow",
-    hex: "#ff0000"
+    hex: "#ffff00"
   },
   {
     name: "blue",
-    hex: "#ff0000"
+    hex: "#0099ff"
   }
 ];
 

@@ -19,26 +19,26 @@ class Color extends Component {
       border: "1px solid #000",
       width: "40px",
       height: "40px",
-      margin: "10px",
-      position: "relative"
+      position: "relative",
+      margin: "4px 0"
     };
     const innerCircleStyle = {
       width: "33%",
       height: "33%",
       textAlign: "center",
       verticalAlign: "middle",
-      backgroundColor: "red",
+      backgroundColor: this.props.colorHex,
       borderRadius: "50% 50%",
       position: "absolute",
       top: "33%",
       right: "33%"
     };
+
     outerBoxStyle["borderColor"] = this.state.isSelected ? "red" : "#000";
 
     return (
       <div onClick={this.handleClick} style={outerBoxStyle}>
         <div style={innerCircleStyle} />
-        {console.log(this.state.isSelected)}
       </div>
     );
   }
