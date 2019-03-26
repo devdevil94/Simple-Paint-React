@@ -42,11 +42,18 @@ class App extends Component {
       return { colors: updatedColors };
     });
     this.setState(prevState => {
+      let currentColor = "new";
       const updatedColors = prevState.colors.map(color => {
-        if (name === color.name) color.isSelected = true;
+        if (name === color.name) {
+          color.isSelected = true;
+          currentColor = color.hex;
+        }
         return color;
       });
-      return { colors: updatedColors };
+      return {
+        colors: updatedColors,
+        currentColor: currentColor
+      };
     });
   }
   render() {
@@ -64,7 +71,9 @@ class App extends Component {
       flexDirection: "column",
       width: "400px"
     };
-    console.log("Color: " + this.state.color + " Size: " + this.state.size);
+    console.log(
+      "Color: " + this.state.currentColor + " Size: " + this.state.size
+    );
     return (
       // <MyProvider>
       <div style={appStyle}>
