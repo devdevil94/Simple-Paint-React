@@ -22,14 +22,26 @@ import "./styles.css";
 
 class App extends Component {
   render() {
-    const appStyle = {
+    const mainRowStyle = {
       display: "flex"
+    };
+    const secondRowStyle = {
+      width: "100%",
+      border: "2px solid #000",
+      marginLeft: "10px"
+    };
+    const appStyle = {
+      display: "flex",
+      flexDirection: "column"
     };
     return (
       // <MyProvider>
       <div style={appStyle}>
-        <Canvas />
-        <ColorsGroup />
+        <div style={mainRowStyle}>
+          <Canvas />
+          <ColorsGroup />
+        </div>
+        <div style={secondRowStyle}>Hi</div>
       </div>
       // </MyProvider>
     );
