@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ColorsGroup from "./components/ColorsGroup";
+import Canvas from "./components/Canvas";
 
 import "./styles.css";
 
@@ -21,9 +22,13 @@ import "./styles.css";
 
 class App extends Component {
   render() {
+    const appStyle = {
+      display: "flex"
+    };
     return (
       // <MyProvider>
-      <div>
+      <div style={appStyle}>
+        <Canvas />
         <ColorsGroup />
       </div>
       // </MyProvider>
