@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ColorsGroup from "./components/ColorsGroup";
 import Canvas from "./components/Canvas";
+import Sizes from "./components/Sizes";
 
 import "./styles.css";
 
@@ -23,7 +24,8 @@ import "./styles.css";
 class App extends Component {
   render() {
     const mainRowStyle = {
-      display: "flex"
+      display: "flex",
+      justifyContent: "space-between"
     };
     const secondRowStyle = {
       width: "100%",
@@ -32,7 +34,8 @@ class App extends Component {
     };
     const appStyle = {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      width: "400px"
     };
     return (
       // <MyProvider>
@@ -41,7 +44,9 @@ class App extends Component {
           <Canvas />
           <ColorsGroup />
         </div>
-        <div style={secondRowStyle}>Hi</div>
+        <div style={secondRowStyle}>
+          <Sizes />
+        </div>
       </div>
       // </MyProvider>
     );

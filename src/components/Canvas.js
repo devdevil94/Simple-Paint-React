@@ -8,7 +8,7 @@ class Canvas extends Component {
       margin: "10px"
     };
 
-    return <canvas style={canvasContainerStyle} width="" height="100%" />;
+    return <canvas style={canvasContainerStyle} />;
   }
 }
 

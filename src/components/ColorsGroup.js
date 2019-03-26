@@ -34,7 +34,7 @@ class ColorsGroup extends Component {
 
     return (
       <div style={colorsContainerStyle}>
-        <h5>Colors</h5>
+        {/* <h5>Colors</h5> */}
         {this.state.colors.map(color => {
           return (
             <Color
