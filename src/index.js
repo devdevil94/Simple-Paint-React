@@ -25,14 +25,17 @@ import "./styles.css";
 class App extends Component {
   constructor() {
     super();
+    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      currentSize: "",
+      currentSize: "x1",
       currentColor: "",
       colors: colors
     };
   }
-
+  handleChange(event) {
+    this.setState({ currentSize: event.target.value });
+  }
   handleClick(name) {
     this.setState(prevState => {
       const updatedColors = prevState.colors.map(color => {
@@ -42,7 +45,7 @@ class App extends Component {
       return { colors: updatedColors };
     });
     this.setState(prevState => {
-      let currentColor = "new";
+      let currentColor = "";
       const updatedColors = prevState.colors.map(color => {
         if (name === color.name) {
           color.isSelected = true;
@@ -72,7 +75,7 @@ class App extends Component {
       width: "400px"
     };
     console.log(
-      "Color: " + this.state.currentColor + " Size: " + this.state.size
+      "Color: " + this.state.currentColor + " Size: " + this.state.currentSize
     );
     return (
       // <MyProvider>
@@ -85,7 +88,7 @@ class App extends Component {
           />
         </div>
         <div style={secondRowStyle}>
-          <Size />
+          <Size value={this.state.size} handleChange={this.handleChange} />
         </div>
       </div>
       // </MyProvider>
