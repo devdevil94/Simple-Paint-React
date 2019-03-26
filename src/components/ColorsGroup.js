@@ -1,29 +1,11 @@
 import React, { Component } from "react";
 import Color from "./Color";
-import colors from "../ColorsData";
 
 class ColorsGroup extends Component {
   constructor() {
     super();
-    this.state = { colors: colors };
-    this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(name) {
-    this.setState(prevState => {
-      const updatedColors = prevState.colors.map(color => {
-        color.isSelected = false;
-        return color;
-      });
-      return { colors: updatedColors };
-    });
-    this.setState(prevState => {
-      const updatedColors = prevState.colors.map(color => {
-        if (name === color.name) color.isSelected = true;
-        return color;
-      });
-      return { colors: updatedColors };
-    });
-  }
+
   render() {
     const colorsContainerStyle = {
       padding: "10px",
@@ -35,12 +17,12 @@ class ColorsGroup extends Component {
     return (
       <div style={colorsContainerStyle}>
         {/* <h5>Colors</h5> */}
-        {this.state.colors.map(color => {
+        {this.props.colors.map(color => {
           return (
             <Color
               key={color.name}
               color={color}
-              handleClick={this.handleClick}
+              handleClick={this.props.handleClick}
             />
           );
         })}

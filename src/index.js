@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ColorsGroup from "./components/ColorsGroup";
 import Canvas from "./components/Canvas";
-import Sizes from "./components/Sizes";
+import Size from "./components/Size";
+import colors from "./ColorsData";
 
 import "./styles.css";
 
@@ -22,6 +23,32 @@ import "./styles.css";
 // }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      currentSize: "",
+      currentColor: "",
+      colors: colors
+    };
+  }
+
+  handleClick(name) {
+    this.setState(prevState => {
+      const updatedColors = prevState.colors.map(color => {
+        color.isSelected = false;
+        return color;
+      });
+      return { colors: updatedColors };
+    });
+    this.setState(prevState => {
+      const updatedColors = prevState.colors.map(color => {
+        if (name === color.name) color.isSelected = true;
+        return color;
+      });
+      return { colors: updatedColors };
+    });
+  }
   render() {
     const mainRowStyle = {
       display: "flex",
@@ -37,15 +64,19 @@ class App extends Component {
       flexDirection: "column",
       width: "400px"
     };
+    console.log("Color: " + this.state.color + " Size: " + this.state.size);
     return (
       // <MyProvider>
       <div style={appStyle}>
         <div style={mainRowStyle}>
           <Canvas />
-          <ColorsGroup />
+          <ColorsGroup
+            handleClick={this.handleClick}
+            colors={this.state.colors}
+          />
         </div>
         <div style={secondRowStyle}>
-          <Sizes />
+          <Size />
         </div>
       </div>
       // </MyProvider>
