@@ -27,16 +27,25 @@ class App extends Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+
+    this.clickX = new Array();
+    this.clickY = new Array();
+    this.clickDrag = new Array();
+    this.clickColor = new Array();
+    this.clickSize = new Array();
+
     this.state = {
       currentSize: "x1",
       currentColor: "",
-      colors: colors
+      colors: colors,
+      painting: true
     };
   }
   handleChange(event) {
     this.setState({ currentSize: event.target.value });
   }
   handleClick(name) {
+    //Needs some refactoring
     this.setState(prevState => {
       const updatedColors = prevState.colors.map(color => {
         color.isSelected = false;
@@ -59,6 +68,23 @@ class App extends Component {
       };
     });
   }
+  handleMouseDown(event) {
+    const mouseX = event.clientX - this.offsetLeft;
+    const mouseY = event.clientY - this.offsetTop;
+    console.log("Hello");
+    if (this.state.painting) {
+      this.addClick(mouseX, mouseY);
+      this.updateCanvas();
+    }
+  }
+  addClick(x, y, dragging) {
+    this.clickX.push(x);
+    this.clickY.push(y);
+    this.clickDrag.push(dragging);
+    this.clickColor.push(this.state.currentColor);
+    this.clickSize.push(this.state.currentSize);
+  }
+
   render() {
     const mainRowStyle = {
       display: "flex",
@@ -66,13 +92,14 @@ class App extends Component {
     };
     const secondRowStyle = {
       width: "100%",
-      border: "2px solid #000",
-      marginLeft: "10px"
+      marginTop: "10px",
+      border: "2px solid #000"
     };
     const appStyle = {
       display: "flex",
       flexDirection: "column",
-      width: "400px"
+      width: "400px",
+      margin: "10px"
     };
     console.log(
       "Color: " + this.state.currentColor + " Size: " + this.state.currentSize
@@ -81,7 +108,14 @@ class App extends Component {
       // <MyProvider>
       <div style={appStyle}>
         <div style={mainRowStyle}>
-          <Canvas />
+          <Canvas
+            handleMouseDown={this.handleMouseDown}
+            clickX={this.clickX}
+            clickY={this.clickY}
+            clickColor={this.clickColor}
+            clickDrag={this.clickDrag}
+            radius={this.radius}
+          />
           <ColorsGroup
             handleClick={this.handleClick}
             colors={this.state.colors}

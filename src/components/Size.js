@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 class Size extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     const settingsContainerStyle = {
       padding: "10px"

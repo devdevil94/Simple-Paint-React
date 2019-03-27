@@ -10,7 +10,6 @@ class ColorsGroup extends Component {
     const colorsContainerStyle = {
       padding: "10px",
       border: "2px solid #000",
-      margin: "10px",
       width: "64px"
     };
 
