@@ -5,7 +5,8 @@ class Canvas extends Component {
     super();
     this.updateCanvas = this.updateCanvas.bind(this);
     this.state = {
-      painting: false
+      painting: false,
+      ctx: null
     };
   }
 
@@ -20,14 +21,28 @@ class Canvas extends Component {
     // console.log(ctx);
   }
 
-  updateCanvas() {
-    const ctx = this.refs.canvas.getContext("2d");
-    // ctx.clerRect(0, 0, 300, 224);
+  updateCanvas(event) {
+    if (!this.state.painting) return;
 
-    // ctx.beginPath();
-    // ctx.moveTo(10, 10);
-    // ctx.lineTo(50, 50);
-    // ctx.stroke();
+    const canvas = this.refs.canvas;
+    this.setState({ ctx: canvas.getContext("2d") });
+
+    let mouseX = event.clientX - canvas.offsetLeft;
+    let mouseY = event.clientY - canvas.offsetTop;
+
+    console.log(mouseX + " " + mouseY);
+
+    // this.state.ctx.clerRect(0, 0, 300, 224);
+    this.state.ctx.lineWidth = 5;
+    this.state.ctx.lineCap = "round";
+
+    this.state.ctx.lineTo(mouseX, mouseY);
+    this.state.ctx.stroke();
+    this.state.ctx.beginPath();
+    this.state.ctx.moveTo(mouseX, mouseY);
+
+    // this.state.ctx.lineTo(50, 50);
+    // this.state.ctx.stroke();
   }
   startPainting() {
     this.setState({ painting: true });
@@ -35,6 +50,7 @@ class Canvas extends Component {
   }
   stopPainting() {
     this.setState({ painting: false });
+    this.state.ctx.beginPath();
     console.log("stop");
   }
   render() {
@@ -52,7 +68,7 @@ class Canvas extends Component {
           this.stopPainting();
         }}
         onMouseMove={event => {
-          this.updateCanvas();
+          this.updateCanvas(event);
         }}
         style={canvasContainerStyle}
         ref="canvas"
