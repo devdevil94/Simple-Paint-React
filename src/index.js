@@ -27,18 +27,13 @@ class App extends Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
+    // this.handleMouseDown = this.handleMouseDown.bind(this);
 
     this.state = {
       currentSize: "x1",
       currentColor: "",
       colors: colors,
       painting: true,
-      clickX: [],
-      clickY: [],
-      clickDrag: [],
-      clickColor: [],
-      clickSize: [],
       radius: 18
     };
   }
@@ -69,62 +64,9 @@ class App extends Component {
       };
     });
   }
-  handleMouseDown = event => {
-    const mouseX = event.clientX - this.offsetLeft;
-    const mouseY = event.clientY - this.offsetTop;
-    console.log("Hello");
+  // handleMouseDown = event => {};
 
-    if (this.state.painting) {
-      this.addClick(mouseX, mouseY, true);
-      this.updateCanvas();
-    }
-  };
-  addClick(x, y, dragging) {
-    this.setState(prevState => {
-      let updateClickX = prevState.clickX;
-      let updateClickY = prevState.clickY;
-      let updateClickDrag = prevState.clickDrag;
-      let updateClickColor = prevState.clickColor;
-      let updateClickSize = prevState.clickSize;
-
-      updateClickX.push(x);
-      updateClickY.push(y);
-      updateClickDrag.push(dragging);
-      updateClickColor.push(prevState.currentColor);
-      updateClickSize.push(prevState.currentSize);
-
-      return {
-        clickX: updateClickX,
-        clickY: updateClickY,
-        clickDrag: updateClickDrag,
-        clickColor: updateClickColor,
-        clickSize: updateClickSize
-      };
-    });
-  }
-
-  updateCanvas(context) {
-    console.log(context);
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-    context.lineJoin = "round";
-
-    for (var i = 0; i < this.state.clickX.length; i++) {
-      context.beginPath();
-
-      if (this.state.clickDrag[i] && i) {
-        context.moveTo(this.state.clickX[i - 1], this.state.clickY[i - 1]);
-      } else {
-        context.moveTo(this.state.clickX[i] - 1, this.state.clickY[i]);
-      }
-
-      context.lineTo(this.state.clickX[i], this.state.clickY[i]);
-      context.closePath();
-      context.strokeStyle = this.state.clickColor[i];
-      context.lineWidth = this.state.radius;
-      context.stroke();
-    }
-  }
+  // updateCanvas(context) {}
 
   render() {
     const mainRowStyle = {
@@ -149,16 +91,7 @@ class App extends Component {
       // <MyProvider>
       <div style={appStyle}>
         <div style={mainRowStyle}>
-          <Canvas
-            handleMouseDown={this.handleMouseDown}
-            clickX={this.state.clickX}
-            clickY={this.state.clickY}
-            clickColor={this.state.clickColor}
-            clickSize={this.state.clickSize}
-            clickDrag={this.state.clickDrag}
-            radius={this.state.radius}
-            updateCanvas={this.updateCanvas}
-          />
+          <Canvas />
           <ColorsGroup
             handleClick={this.handleClick}
             colors={this.state.colors}
