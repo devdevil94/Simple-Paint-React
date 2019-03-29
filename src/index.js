@@ -27,18 +27,19 @@ class App extends Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-
-    this.clickX = new Array();
-    this.clickY = new Array();
-    this.clickDrag = new Array();
-    this.clickColor = new Array();
-    this.clickSize = new Array();
+    this.handleMouseDown = this.handleMouseDown.bind(this);
 
     this.state = {
       currentSize: "x1",
       currentColor: "",
       colors: colors,
-      painting: true
+      painting: true,
+      clickX: [],
+      clickY: [],
+      clickDrag: [],
+      clickColor: [],
+      clickSize: [],
+      radius: 18
     };
   }
   handleChange(event) {
@@ -68,21 +69,61 @@ class App extends Component {
       };
     });
   }
-  handleMouseDown(event) {
+  handleMouseDown = event => {
     const mouseX = event.clientX - this.offsetLeft;
     const mouseY = event.clientY - this.offsetTop;
     console.log("Hello");
+
     if (this.state.painting) {
-      this.addClick(mouseX, mouseY);
+      this.addClick(mouseX, mouseY, true);
       this.updateCanvas();
     }
-  }
+  };
   addClick(x, y, dragging) {
-    this.clickX.push(x);
-    this.clickY.push(y);
-    this.clickDrag.push(dragging);
-    this.clickColor.push(this.state.currentColor);
-    this.clickSize.push(this.state.currentSize);
+    this.setState(prevState => {
+      let updateClickX = prevState.clickX;
+      let updateClickY = prevState.clickY;
+      let updateClickDrag = prevState.clickDrag;
+      let updateClickColor = prevState.clickColor;
+      let updateClickSize = prevState.clickSize;
+
+      updateClickX.push(x);
+      updateClickY.push(y);
+      updateClickDrag.push(dragging);
+      updateClickColor.push(prevState.currentColor);
+      updateClickSize.push(prevState.currentSize);
+
+      return {
+        clickX: updateClickX,
+        clickY: updateClickY,
+        clickDrag: updateClickDrag,
+        clickColor: updateClickColor,
+        clickSize: updateClickSize
+      };
+    });
+  }
+
+  updateCanvas(context) {
+    console.log(context);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+    context.lineJoin = "round";
+
+    for (var i = 0; i < this.state.clickX.length; i++) {
+      context.beginPath();
+
+      if (this.state.clickDrag[i] && i) {
+        context.moveTo(this.state.clickX[i - 1], this.state.clickY[i - 1]);
+      } else {
+        context.moveTo(this.state.clickX[i] - 1, this.state.clickY[i]);
+      }
+
+      context.lineTo(this.state.clickX[i], this.state.clickY[i]);
+      context.closePath();
+      context.strokeStyle = this.state.clickColor[i];
+      context.lineWidth = this.state.radius;
+      context.stroke();
+    }
   }
 
   render() {
@@ -101,20 +142,22 @@ class App extends Component {
       width: "400px",
       margin: "10px"
     };
-    console.log(
-      "Color: " + this.state.currentColor + " Size: " + this.state.currentSize
-    );
+    // console.log(
+    //   "Color: " + this.state.currentColor + " Size: " + this.state.currentSize
+    // );
     return (
       // <MyProvider>
       <div style={appStyle}>
         <div style={mainRowStyle}>
           <Canvas
             handleMouseDown={this.handleMouseDown}
-            clickX={this.clickX}
-            clickY={this.clickY}
-            clickColor={this.clickColor}
-            clickDrag={this.clickDrag}
-            radius={this.radius}
+            clickX={this.state.clickX}
+            clickY={this.state.clickY}
+            clickColor={this.state.clickColor}
+            clickSize={this.state.clickSize}
+            clickDrag={this.state.clickDrag}
+            radius={this.state.radius}
+            updateCanvas={this.updateCanvas}
           />
           <ColorsGroup
             handleClick={this.handleClick}
